@@ -1,0 +1,928 @@
+---
+import Base from "../layouts/Base.astro";
+import {
+  profile,
+  projects,
+  skills,
+  experience,
+  sections,
+  stats,
+  about,
+  achievements,
+} from "../data/site";
+const allTags = [...new Set(projects.flatMap((p) => p.tags))];
+const initial = profile.name.trim()[0].toUpperCase();
+const year = new Date().getFullYear();
+const layers = Array.from({ length: 12 }, (_, i) => i + 1); // extrusion depth
+const nav = [
+  sections.about && { href: "#about", label: "About" },
+  sections.skills && { href: "#skills", label: "Skills" },
+  sections.projects && { href: "#projects", label: "Projects" },
+  sections.experience && { href: "#experience", label: "Experience" },
+  sections.achievements && { href: "#achievements", label: "Achievements" },
+  sections.contact && { href: "#contact", label: "Contact" },
+].filter(Boolean) as { href: string; label: string }[];
+---
+
+<Base title={`${profile.name} · ${profile.role}`} description={profile.intro}>
+  <a class="skip" href="#about">Skip to content</a>
+
+  <header class="nav" id="nav">
+    <div class="nav-in">
+      <a class="brand" href="#top"
+        ><i aria-hidden="true"></i>{profile.firstName}</a
+      >
+      <nav aria-label="Main" id="site-nav">
+        <ul>
+          {
+            nav.map((n) => (
+              <li>
+                <a href={n.href}>{n.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <a class="btn sm primary nav-cta" href={`mailto:${profile.email}`}
+        >Let’s talk</a
+      >
+      <button
+        class="menu"
+        id="menu"
+        type="button"
+        aria-label="Menu"
+        aria-expanded="false"
+        aria-controls="site-nav"><span></span><span></span></button
+      >
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="wrap hero-wrap">
+        <div class="hero-meta">
+          <p class="role">
+            {profile.role}{
+              profile.location && <small>{profile.location}</small>
+            }
+          </p>
+          {
+            profile.available && (
+              <p class="status">
+                <i />
+                Available for work
+              </p>
+            )
+          }
+        </div>
+
+        <div class="intro">
+          <h1 class="intro-h">
+            Hi, I’m <em>{profile.name}</em>
+            <span>— {profile.role}</span>
+          </h1>
+          <p class="lead">{profile.intro}</p>
+        </div>
+
+        <div class="stage3d" id="stage3d">
+          <div class="word-enter">
+            <p class="word3d" aria-hidden="true">
+              <span class="layer front" aria-hidden="true"
+                >{profile.wordmark}</span
+              >
+              {
+                layers.map((i) => (
+                  <span
+                    class="layer back"
+                    aria-hidden="true"
+                    style={`--i:${i}`}
+                  >
+                    {profile.wordmark}
+                  </span>
+                ))
+              }
+            </p>
+          </div>
+
+          <div class="mock-wrap" aria-hidden="true">
+            <div class="mock-enter">
+              <div class="mock">
+                <div class="mock-glow"></div>
+                <div class="sheet s3"></div>
+                <div class="sheet s2"></div>
+                <div class="mock-body">
+                  <div class="chrome">
+                    <span class="dots"><i></i><i></i><i></i></span>
+                    <span class="addr"
+                      >{profile.firstName.toLowerCase()}.dev</span
+                    >
+                    <span class="gap"></span>
+                  </div>
+                  <div class="page">
+                    <div class="p-nav">
+                      <b>{profile.firstName}</b><i></i><i></i><i></i><em
+                        >Contact</em
+                      >
+                    </div>
+                    <div class="p-hero">
+                      <div>
+                        <h4>Real-world web apps</h4><p>
+                          React, Astro, Node.js, NestJS and databases.
+                        </p>
+                      </div>
+                      <div class="p-orb"></div>
+                    </div>
+                    <div class="p-cards">
+                      {
+                        stats.map((x) => (
+                          <div class="p-card">
+                            <>
+                              <u />
+                              <strong>{x.value}</strong>
+                              <span>{x.label}</span>
+                            </>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  </div>
+                </div>
+                <div class="float">
+                  <b>{profile.firstName[0]}</b><span
+                    >{profile.role}<small>React · Node.js · NestJS</small></span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-copy">
+            <div class="actions">
+              {
+                sections.about && (
+                  <a class="btn primary" href="#about">
+                    About me
+                  </a>
+                )
+              }
+              {
+                sections.projects && (
+                  <a class="btn" href="#projects">
+                    Featured projects
+                  </a>
+                )
+              }
+              <a class="btn" href={profile.resume} download>Download resume</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {
+      sections.about && (
+        <section id="about" class="sec">
+          <div class="wrap">
+            <p class="eyebrow">About me</p>
+            <p class="statement">{profile.statement}</p>
+            <div class="about-grid">
+              <div>
+                <ul class="prin">
+                  {about.map((p) => (
+                    <li class={p.pending ? "pending" : ""}>
+                      <h3>{p.title}</h3>
+                      <p>{p.text}</p>
+                    </li>
+                  ))}
+                </ul>
+                <div class="stats">
+                  {stats.map((x) => (
+                    <div>
+                      <b>{x.value}</b>
+                      <span>{x.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <aside class="me tilt" data-tilt>
+                <div class="portrait">
+                  {profile.avatar ? (
+                    <img src={profile.avatar} alt={profile.name} />
+                  ) : (
+                    <span class="initial" aria-hidden="true">
+                      {initial}
+                    </span>
+                  )}
+                  {profile.available && (
+                    <span class="tag">
+                      <i />
+                      Open to new work
+                    </span>
+                  )}
+                </div>
+                <div class="info">
+                  <h3>{profile.name}</h3>
+                  <p class="role">{profile.role}</p>
+                  <dl>
+                    {profile.location && (
+                      <div>
+                        <dt>Location</dt>
+                        <dd>{profile.location}</dd>
+                      </div>
+                    )}
+                    <div>
+                      <>
+                        <dt>Email</dt>
+                        <dd>
+                          <a href={`mailto:${profile.email}`}>
+                            {profile.email}
+                          </a>
+                        </dd>
+                      </>
+                    </div>
+                  </dl>
+                  <a class="btn" href={profile.resume} download>
+                    Download resume
+                  </a>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    {
+      sections.skills && (
+        <section id="skills" class="sec">
+          <div class="wrap">
+            <div class="sec-head">
+              <>
+                <h2>Skills</h2>
+                <p>The tools I reach for, and what I use each one for.</p>
+              </>
+            </div>
+            <div class="skills-grid" id="skills-ui">
+              <div
+                class="tabs"
+                role="tablist"
+                aria-label="Skill groups"
+                aria-orientation="vertical"
+              >
+                {skills.map((s, i) => (
+                  <button
+                    class="tab"
+                    role="tab"
+                    type="button"
+                    id={`tab-${i}`}
+                    aria-controls={`panel-${i}`}
+                    aria-selected={i === 0 ? "true" : "false"}
+                    tabindex={i === 0 ? 0 : -1}
+                  >
+                    {s.group}
+                    <small>{s.items.length}</small>
+                  </button>
+                ))}
+              </div>
+              <div>
+                {skills.map((s, i) => (
+                  <div
+                    class="panel"
+                    role="tabpanel"
+                    id={`panel-${i}`}
+                    aria-labelledby={`tab-${i}`}
+                    hidden={i !== 0}
+                  >
+                    <p>{s.blurb}</p>
+                    <ul class="tiles">
+                      {s.items.map((it, k) => (
+                        <li class="tile" style={`--k:${k}`}>
+                          <b>{it.name}</b>
+                          <span>{it.note}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    {
+      sections.projects && (
+        <section id="projects" class="sec projects">
+          <div class="wrap">
+            <div class="proj-head">
+              <h2>Featured Projects</h2>
+              <div class="chips" role="group" aria-label="Filter projects">
+                <button
+                  class="chip"
+                  type="button"
+                  data-filter="all"
+                  aria-pressed="true"
+                >
+                  All
+                </button>
+                {allTags.map((t) => (
+                  <button
+                    class="chip"
+                    type="button"
+                    data-filter={t}
+                    aria-pressed="false"
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div
+              class="showcase"
+              id="showcase"
+              data-projects={JSON.stringify(projects)}
+            >
+              <ul class="plist" aria-label="Projects">
+                {projects.map((p, i) => (
+                  <li data-tags={p.tags.join("|")}>
+                    <button
+                      type="button"
+                      data-slug={p.slug}
+                      aria-current={i === 0 ? "true" : "false"}
+                    >
+                      <span class="title">{p.title}</span>
+                      <span class="year">{p.year}</span>
+                      <small>{p.tagline}</small>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+
+              <div class="frame">
+                <div class="frame-top">
+                  <span class="dots" aria-hidden="true">
+                    <>
+                      <i />
+                      <i />
+                      <i />
+                    </>
+                  </span>
+                  <span class="url" id="p-url" />
+                  <div class="seg" role="group" aria-label="Preview size">
+                    <button
+                      type="button"
+                      data-device="desktop"
+                      aria-pressed="true"
+                    >
+                      Desktop
+                    </button>
+                    <button
+                      type="button"
+                      data-device="mobile"
+                      aria-pressed="false"
+                    >
+                      Mobile
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="stage"
+                  id="stage"
+                  data-device="desktop"
+                  data-loading="true"
+                >
+                  <iframe
+                    id="p-frame"
+                    title="Live project preview"
+                    loading="lazy"
+                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                  />
+                  <div class="loader" aria-hidden="true">
+                    <span>Loading preview</span>
+                  </div>
+                </div>
+                <p class="note">
+                  Preview stays blank? Some sites block embedding. Open the live
+                  site instead.
+                </p>
+                <div class="detail">
+                  <div>
+                    <h3 id="p-title" />
+                    <p id="p-desc" />
+                    <ul class="tags" id="p-stack" />
+                  </div>
+                  <div>
+                    <dl class="facts">
+                      <div id="f-year">
+                        <>
+                          <dt>Year</dt>
+                          <dd />
+                        </>
+                      </div>
+                      <div id="f-role">
+                        <>
+                          <dt>Role</dt>
+                          <dd />
+                        </>
+                      </div>
+                      <div id="f-type">
+                        <>
+                          <dt>Type</dt>
+                          <dd />
+                        </>
+                      </div>
+                    </dl>
+                    <div class="links">
+                      <a
+                        class="btn primary"
+                        id="p-live"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        Open live site
+                      </a>
+                      <a class="btn" id="p-repo" target="_blank" rel="noopener">
+                        View source
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    {
+      sections.experience && (
+        <section id="experience" class="sec">
+          <div class="wrap">
+            <div class="sec-head">
+              <>
+                <h2>Experience</h2>
+                <p>
+                  Where I’ve worked and studied. Open a role for the details.
+                </p>
+              </>
+            </div>
+            <div class="xp" id="xp">
+              {experience.map((e, i) => (
+                <div class="xp-item" data-open={i === 0 ? "true" : "false"}>
+                  <button
+                    class="xp-btn"
+                    type="button"
+                    id={`xp-b${i}`}
+                    aria-expanded={i === 0 ? "true" : "false"}
+                    aria-controls={`xp-p${i}`}
+                  >
+                    <span class="xp-when">{e.period}</span>
+                    <h3>
+                      {e.title}
+                      {e.period.includes("Now") && (
+                        <span class="now">Current role</span>
+                      )}
+                      <span class="org">{e.org}</span>
+                    </h3>
+                    <span class="plus" aria-hidden="true" />
+                  </button>
+                  <div
+                    class="xp-body"
+                    id={`xp-p${i}`}
+                    role="region"
+                    aria-labelledby={`xp-b${i}`}
+                  >
+                    <div>
+                      <div class="xp-in">
+                        <p class="note-t">{e.note}</p>
+                        <ul>
+                          {e.points.map((pt) => (
+                            <li>{pt}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    {
+      sections.achievements && (
+        <section id="achievements" class="sec">
+          <div class="wrap">
+            <div class="sec-head">
+              <>
+                <h2>Achievements</h2>
+                <p>Milestones worth sharing.</p>
+              </>
+            </div>
+            <ul class="ach">
+              {achievements.map((a, i) => (
+                <li class={a.pending ? "pending" : ""}>
+                  <span class="n">0{i + 1}</span>
+                  <h3>{a.title}</h3>
+                  <p>{a.text}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )
+    }
+
+    {
+      sections.contact && (
+        <section id="contact" class="sec">
+          <div class="wrap">
+            <div class="contact-panel">
+              <div>
+                <h2>Let’s build something together.</h2>
+                <p class="sub">
+                  Tell me what you’re working on and how I can help.
+                </p>
+                <a class="big" href={`mailto:${profile.email}`}>
+                  {profile.email}
+                </a>
+                <div class="actions">
+                  <button
+                    class="btn"
+                    type="button"
+                    id="copy"
+                    data-email={profile.email}
+                  >
+                    Copy email address
+                  </button>
+                </div>
+                <p id="copy-msg" role="status" aria-live="polite" />
+              </div>
+              <form
+                class="form"
+                id="form"
+                data-email={profile.email}
+                novalidate
+              >
+                <label>
+                  Your name
+                  <input name="name" autocomplete="name" required />
+                </label>
+                <label>
+                  Your email
+                  <input
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    required
+                  />
+                </label>
+                <label>
+                  Message
+                  <textarea name="message" rows="5" required />
+                </label>
+                <button class="btn primary" type="submit">
+                  Send message
+                </button>
+                <p id="form-msg" role="status" aria-live="polite" />
+              </form>
+            </div>
+          </div>
+        </section>
+      )
+    }
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© {year} {profile.name}</span>
+      <span
+        >{
+          profile.socials.map((s) => (
+            <a href={s.href} target="_blank" rel="noopener">
+              {s.label}
+            </a>
+          ))
+        }</span
+      >
+    </div>
+    <p class="foot-word" aria-hidden="true">{profile.wordmark}</p>
+  </footer>
+
+  <script>
+    const $ = (id: string) => document.getElementById(id)!;
+    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const clamp = (n: number, a: number, b: number) =>
+      Math.min(b, Math.max(a, n));
+
+    /* Hero: pointer-driven depth, ambient drift when idle, tilt flattens on scroll */
+    const hero = $("top"),
+      stage3d = $("stage3d");
+    if (!calm) {
+      let tx = 0,
+        ty = 0,
+        cx = 0,
+        cy = 0,
+        active = false,
+        visible = true,
+        scrollP = 0;
+      hero.addEventListener("pointermove", (e) => {
+        const r = hero.getBoundingClientRect();
+        tx = clamp(((e.clientX - r.left) / r.width - 0.5) * 2, -1, 1);
+        ty = clamp(((e.clientY - r.top) / r.height - 0.5) * 2, -1, 1);
+        active = true;
+      });
+      hero.addEventListener("pointerleave", () => {
+        active = false;
+      });
+      new IntersectionObserver((es) => {
+        visible = es[0].isIntersecting;
+      }).observe(hero);
+      const onScroll = () => {
+        scrollP = clamp(window.scrollY / (hero.offsetHeight * 0.75), 0, 1);
+        stage3d.style.setProperty("--p", scrollP.toFixed(3));
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+      const tick = (t: number) => {
+        if (visible) {
+          if (!active) {
+            tx = Math.sin(t / 2600) * 0.5;
+            ty = Math.cos(t / 3300) * 0.3;
+          }
+          cx += (tx - cx) * 0.07;
+          cy += (ty - cy) * 0.07;
+          stage3d.style.setProperty("--mx", cx.toFixed(3));
+          stage3d.style.setProperty("--my", cy.toFixed(3));
+        }
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+
+    /* Tilt card (About) */
+    document.querySelectorAll<HTMLElement>("[data-tilt]").forEach((el) => {
+      if (calm) return;
+      el.addEventListener("pointermove", (e) => {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty(
+          "--tx",
+          String(clamp(((e.clientX - r.left) / r.width - 0.5) * 2, -1, 1)),
+        );
+        el.style.setProperty(
+          "--ty",
+          String(clamp(((e.clientY - r.top) / r.height - 0.5) * 2, -1, 1)),
+        );
+        el.dataset.active = "true";
+      });
+      el.addEventListener("pointerleave", () => {
+        el.style.setProperty("--tx", "0");
+        el.style.setProperty("--ty", "0");
+        el.dataset.active = "false";
+      });
+    });
+
+    /* Nav: mobile menu + current section */
+    const nav = $("nav"),
+      menu = $("menu");
+    const setMenu = (open: boolean) => {
+      nav.dataset.open = String(open);
+      menu.setAttribute("aria-expanded", String(open));
+    };
+    menu.addEventListener("click", () => setMenu(nav.dataset.open !== "true"));
+    nav
+      .querySelectorAll("nav a")
+      .forEach((a) => a.addEventListener("click", () => setMenu(false)));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setMenu(false);
+    });
+    const links = [...nav.querySelectorAll<HTMLAnchorElement>("nav a")];
+    const secObs = new IntersectionObserver(
+      (es) =>
+        es.forEach((e) => {
+          if (e.isIntersecting)
+            links.forEach((l) =>
+              l.setAttribute(
+                "aria-current",
+                String(l.getAttribute("href") === "#" + e.target.id),
+              ),
+            );
+        }),
+      { rootMargin: "-40% 0px -55% 0px" },
+    );
+    links.forEach((l) => {
+      const s = document.querySelector(l.getAttribute("href")!);
+      if (s) secObs.observe(s);
+    });
+
+    /* Skills: tabs with arrow-key support */
+    const tabs = [...document.querySelectorAll<HTMLButtonElement>(".tab")];
+    function pick(i: number, focus = false) {
+      tabs.forEach((t, k) => {
+        const on = k === i;
+        t.setAttribute("aria-selected", String(on));
+        t.tabIndex = on ? 0 : -1;
+        const p = document.getElementById(t.getAttribute("aria-controls")!)!;
+        p.hidden = !on;
+      });
+      if (focus) tabs[i].focus();
+    }
+    tabs.forEach((t, i) => {
+      t.addEventListener("click", () => pick(i));
+      t.addEventListener("keydown", (e) => {
+        const keys: Record<string, number> = {
+          ArrowDown: 1,
+          ArrowRight: 1,
+          ArrowUp: -1,
+          ArrowLeft: -1,
+        };
+        if (e.key in keys) {
+          e.preventDefault();
+          pick((i + keys[e.key] + tabs.length) % tabs.length, true);
+        }
+        if (e.key === "Home") {
+          e.preventDefault();
+          pick(0, true);
+        }
+        if (e.key === "End") {
+          e.preventDefault();
+          pick(tabs.length - 1, true);
+        }
+      });
+    });
+
+    /* Experience: expandable rows */
+    document.querySelectorAll<HTMLElement>(".xp-item").forEach((item) => {
+      const btn = item.querySelector<HTMLButtonElement>(".xp-btn")!;
+      btn.addEventListener("click", () => {
+        const open = item.dataset.open !== "true";
+        item.dataset.open = String(open);
+        btn.setAttribute("aria-expanded", String(open));
+      });
+    });
+
+    /* Projects: live preview */
+    const root = document.getElementById("showcase");
+    if (root) initShowcase(root);
+
+    function initShowcase(root: HTMLElement) {
+      const projects: any[] = JSON.parse(root.dataset.projects!);
+      const list = root.querySelector<HTMLElement>(".plist")!;
+      const buttons = [...list.querySelectorAll<HTMLButtonElement>("button")];
+      const segs = [...root.querySelectorAll<HTMLButtonElement>(".seg button")];
+      const chips = [...document.querySelectorAll<HTMLButtonElement>(".chip")];
+      const stage = $("stage");
+      const frame = $("p-frame") as HTMLIFrameElement;
+      const stacked = window.matchMedia("(max-width: 1023px)");
+      let current = projects[0];
+      let started = false;
+      let timer = 0;
+
+      const done = () => {
+        clearTimeout(timer);
+        stage.dataset.loading = "false";
+      };
+      frame.addEventListener("load", done);
+
+      function load(p: any) {
+        if (!p.live || frame.dataset.src === p.live) {
+          done();
+          return;
+        }
+        stage.dataset.loading = "true";
+        clearTimeout(timer);
+        timer = window.setTimeout(done, 8000);
+        frame.dataset.src = p.live;
+        frame.src = p.live;
+      }
+      new IntersectionObserver(
+        (es, obs) => {
+          if (es[0].isIntersecting) {
+            started = true;
+            obs.disconnect();
+            load(current);
+          }
+        },
+        { rootMargin: "400px 0px" },
+      ).observe(root);
+
+      const setDevice = (d: string) => {
+        stage.dataset.device = d;
+        segs.forEach((s) =>
+          s.setAttribute("aria-pressed", String(s.dataset.device === d)),
+        );
+      };
+      const fact = (id: string, v?: string) => {
+        const el = $(id);
+        el.hidden = !v;
+        el.querySelector("dd")!.textContent = v || "";
+      };
+
+      function show(slug: string, scroll = false) {
+        const p = projects.find((x) => x.slug === slug);
+        if (!p) return;
+        current = p;
+        buttons.forEach((b) =>
+          b.setAttribute("aria-current", String(b.dataset.slug === slug)),
+        );
+        setDevice(p.device || "desktop");
+        $("p-url").textContent = !p.live
+          ? "add-your-live-link"
+          : p.live.replace(/^https?:\/\//, "").replace(/\/$/, "");
+        $("p-title").textContent = p.title;
+        $("p-desc").textContent = p.description;
+        fact("f-year", p.year);
+        fact("f-role", p.role);
+        fact("f-type", p.tags?.[0]);
+        $("p-stack").innerHTML = p.stack
+          .map((s: string) => `<li>${s}</li>`)
+          .join("");
+        ($("p-live") as HTMLAnchorElement).href = p.live || "#contact";
+        ($("p-repo") as HTMLAnchorElement).href = p.repo || "#contact";
+        if (started) load(p);
+        if (scroll && stacked.matches) {
+          buttons
+            .find((b) => b.dataset.slug === slug)
+            ?.scrollIntoView({
+              inline: "center",
+              block: "nearest",
+              behavior: calm ? "auto" : "smooth",
+            });
+        }
+      }
+      buttons.forEach((b) =>
+        b.addEventListener("click", () => show(b.dataset.slug!, true)),
+      );
+
+      list.addEventListener("keydown", (e) => {
+        if (
+          !["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft"].includes(e.key)
+        )
+          return;
+        const vis = buttons.filter((b) => !b.closest("li")!.hidden);
+        const i = vis.indexOf(document.activeElement as HTMLButtonElement);
+        if (i < 0) return;
+        e.preventDefault();
+        const fwd = e.key === "ArrowDown" || e.key === "ArrowRight";
+        const n = vis[(i + (fwd ? 1 : -1) + vis.length) % vis.length];
+        n.focus();
+        show(n.dataset.slug!, true);
+      });
+
+      chips.forEach((chip) =>
+        chip.addEventListener("click", () => {
+          chips.forEach((c) =>
+            c.setAttribute("aria-pressed", String(c === chip)),
+          );
+          const f = chip.dataset.filter!;
+          const visible: string[] = [];
+          list.querySelectorAll<HTMLLIElement>("li").forEach((li) => {
+            const ok = f === "all" || li.dataset.tags!.split("|").includes(f);
+            li.hidden = !ok;
+            if (ok) visible.push(li.querySelector("button")!.dataset.slug!);
+          });
+          if (visible.length && !visible.includes(current.slug))
+            show(visible[0], true);
+        }),
+      );
+
+      segs.forEach((b) =>
+        b.addEventListener("click", () => setDevice(b.dataset.device!)),
+      );
+      show(current.slug);
+    }
+
+    /* Contact: copy email + compose message */
+    const copy = document.getElementById("copy");
+    copy?.addEventListener("click", async () => {
+      const msg = $("copy-msg");
+      try {
+        await navigator.clipboard.writeText(copy.dataset.email!);
+        msg.textContent = "Email address copied.";
+      } catch {
+        msg.textContent = "Copy failed. Email: " + copy.dataset.email;
+      }
+    });
+    const form = document.getElementById("form") as HTMLFormElement | null;
+    form?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const msg = $("form-msg");
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        msg.textContent = "Fill in all three fields so I can reply.";
+        return;
+      }
+      const d = new FormData(form);
+      const body = `${d.get("message")}\n\n${d.get("name")}\n${d.get("email")}`;
+      msg.textContent =
+        "Opening your email app with the message ready to send.";
+      window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent("Hello from " + d.get("name"))}&body=${encodeURIComponent(body)}`;
+    });
+  </script>
+</Base>

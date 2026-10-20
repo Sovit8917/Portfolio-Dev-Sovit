@@ -1,0 +1,31 @@
+---
+import '@fontsource/instrument-serif/400.css';
+import '@fontsource/instrument-serif/400-italic.css';
+import '@fontsource/inter-tight/400.css';
+import '@fontsource/inter-tight/500.css';
+import '@fontsource/inter-tight/600.css';
+import '../styles/global.css';
+import { theme } from '../data/site';
+interface Props { title: string; description: string }
+const { title, description } = Astro.props;
+const vars = `--accent:${theme.accent};--bg:${theme.background};--ink:${theme.ink};--radius:${theme.radius};--wrap:${theme.maxWidth};--display:'${theme.headingFont}',Georgia,serif;--body:'${theme.bodyFont}',system-ui,sans-serif`;
+const url = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en" style={vars}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={url} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content={theme.background} />
+    <meta name="color-scheme" content="light" />
+    <script is:inline>document.documentElement.classList.add("js")</script>
+  </head>
+  <body><slot /></body>
+</html>
