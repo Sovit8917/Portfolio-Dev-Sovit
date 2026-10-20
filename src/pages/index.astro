@@ -531,6 +531,11 @@ const nav = [
                   <span class="n">0{i + 1}</span>
                   <h3>{a.title}</h3>
                   <p>{a.text}</p>
+                  {a.link && (
+                    <a href={a.link} target="_blank" rel="noopener noreferrer">
+                      View Certificate ↗
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>

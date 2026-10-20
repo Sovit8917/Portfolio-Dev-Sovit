@@ -6,14 +6,14 @@ export const profile = {
   wordmark: 'SOVIT', // the oversized hero lettering
   role: 'Full-Stack Developer',
   intro:
-    'I build real-world web applications end to end: React and Astro on the front, Node.js and NestJS on the back, and databases underneath.',
-  statement:
-    'A full-stack developer who works across the whole stack, from the interface people touch to the API and the database behind it.',
-  location: '', // optional, hidden when empty
-  email: 'you@example.com',
+  'I build full-stack applications and AI-powered solutions using React, Next.js, Node.js, and modern AI tools.',
+statement:
+  'Passionate about combining full-stack development and Generative AI to build intelligent applications, useful AI agents, and real-world software solutions.',
+location: 'Balasore, Odisha',
+  email: 'lenkasovitsarbeswar@gmail.com',
   resume: '/resume.pdf', // put your PDF in /public
-  avatar: '', // e.g. '/me.jpg'. Empty = initial
-  available: false, // set true to show an "Available for work" badge
+  avatar: '/profile_picture.jpeg', // e.g. '/me.jpg'. Empty = initial
+  available: true, //set true to show an "Available for work" badge
   socials: [
     { label: 'GitHub', href: 'https://github.com/Sovit8917'},
     { label: 'LinkedIn', href: 'https://linkedin.com/in/yourname' },
@@ -21,24 +21,79 @@ export const profile = {
 };
 
 export const stats = [
-  { value: 'Frontend', label: 'React · Astro' },
-  { value: 'Backend', label: 'Node.js · NestJS' },
-  { value: 'Data', label: 'Databases' },
+  { value: 'Frontend', label: 'React · Next.js' },
+  { value: 'Backend', label: 'Node.js · NestJS · ElysiaJS' },
+  { value: 'Database', label: 'PostgreSQL · MongoDB' },
 ];
 
 export const about = [
-  { title: 'Background', text: 'Add a short, true account of how you got into software: studies, first projects, what pulled you in.', pending: true },
-  { title: 'Current experience', text: 'Add your current role, or what you are building right now.', pending: true },
-  { title: 'Technical strengths', text: 'React and Astro for the interface, Node.js and NestJS for services, and databases for the data layer, applied to real-world web applications.' },
-  { title: 'Career goals', text: 'Add where you want to grow next.', pending: true },
+  {
+    title: 'Background',
+    text: 'Computer Science graduate passionate about building practical web applications.',
+  },
+  {
+    title: 'Current experience',
+    text: 'Full Stack Developer at Bulwarkers Websecurity, building backend services and REST APIs.',
+  },
+  {
+    title: 'Technical strengths',
+    text: 'React, Next.js, Astro, Node.js, NestJS, PostgreSQL, MongoDB, and Redis.',
+  },
+  {
+    title: 'Career goals',
+    text: 'Building scalable applications and growing as a software engineer.',
+  },
 ];
-
 export const projects = [
-  { slug: 'project-one', title: 'Featured project', tagline: 'Add a one-line summary', description: 'Replace with what it does, who uses it, and what you built.', live: '', repo: '', tags: ['Web App'], year: '', role: '', stack: [] as string[] },
-  { slug: 'project-two', title: 'Second project', tagline: 'Add a one-line summary', description: 'Replace with what it does, who uses it, and what you built.', live: '', repo: '', tags: ['Full-stack'], year: '', role: '', stack: [] as string[] },
-  { slug: 'project-three', title: 'Third project', tagline: 'Add a one-line summary', description: 'Replace with what it does, who uses it, and what you built.', live: '', repo: '', tags: ['Web App'], year: '', role: '', stack: [] as string[] },
+  {
+    slug: 'karyvio',
+    title: 'Karyvio',
+    tagline: 'Tech jobs and career platform.',
+    description: 'Job search, filtering, authentication, and admin features.',
+    live: 'https://karyvio.com/',
+    repo: '',
+    tags: ['Full-stack', 'Web App'],
+    year: '2026',
+    role: 'Full-Stack Developer',
+    stack: ['Next.js', 'NestJS', 'TypeScript', 'PostgreSQL', 'Redis'],
+  },
+  {
+    slug: 'homeserve-customer',
+    title: 'HomeServe Customer',
+    tagline: 'Home services booking platform for customers.',
+    description: 'Built service browsing, booking, scheduling, and OTP authentication.',
+    live: 'https://home-serve-customer-website.vercel.app/',
+    repo: 'https://github.com/Sovit8917/HomeServe-Customer-Website.git',
+    tags: ['Full-stack', 'Web App'],
+    year: '2026',
+    role: 'Full-Stack Developer',
+    stack: ['Next.js', 'NestJS', 'PostgreSQL', 'Tailwind CSS'],
+  },
+  {
+    slug: 'homeserve-worker',
+    title: 'HomeServe Worker',
+    tagline: 'Service management platform for workers.',
+    description: 'Built worker workflows for assigned jobs, scheduling, tracking, and profile management.',
+    live: 'https://home-serve-worker-website.vercel.app/',
+    repo: '',
+    tags: ['Full-stack', 'Web App'],
+    year: '2026',
+    role: 'Full-Stack Developer',
+    stack: ['Next.js', 'NestJS', 'PostgreSQL', 'Tailwind CSS'],
+  },
+  {
+    slug: 'homeserve-mobile',
+    title: 'HomeServe Mobile',
+    tagline: 'Mobile app for home service bookings.',
+    description: 'Built customer booking features and integrated backend APIs.',
+    live: 'https://github.com/Sovit8917/HomeServe-APK/releases/download/v1.0.5/HomeServe.APK.1.1.5.apk',
+    repo: 'https://github.com/Sovit8917/HomeServe-APK.git',
+    tags: ['Mobile App'],
+    year: '2026',
+    role: 'Mobile Developer',
+    stack: ['React Native', 'Expo', 'NestJS', 'PostgreSQL'],
+  },
 ];
-
 export const skills = [
   {
     group: 'Frontend',
@@ -103,26 +158,60 @@ export const skills = [
       { name: 'Postman', note: 'API testing and debugging' },
     ],
   },
-  {
-    group: 'Authentication & Security',
-    blurb: 'Implementing secure authentication and session-based access.',
-    items: [
-      { name: 'JWT', note: 'Token-based authentication' },
-      { name: 'Better Auth', note: 'Authentication and session management' },
-      { name: 'Session Management', note: 'Cookie-based sessions and access control' },
-    ],
-  },
+  
 ];
 
 export const experience = [
-  { period: 'Add dates', title: 'Current role', org: 'Add company', note: 'Add what you do and own here.', points: ['Add a verified highlight.'], pending: true },
-  { period: 'Add dates', title: 'Education', org: 'Add institution', note: 'Add your degree or training here.', points: ['Add a verified highlight.'], pending: true },
+  {
+    period: 'Aug 2026 – Present',
+    title: 'Full Stack Developer',
+    org: 'Bulwarkers Websecurity Pvt. Ltd.',
+    note: 'Developing backend services and REST APIs for web security applications.',
+    points: [
+      'Building APIs using ElysiaJS, TypeScript, and PostgreSQL.',
+      'Working on backend architecture, authentication, and database integration.',
+    ],
+    pending: false,
+  },
+  {
+    period: 'Feb 2026 – Jul 2026',
+    title: 'Full Stack Developer Intern',
+    org: 'Bulwarkers Websecurity Pvt. Ltd.',
+    note: 'Worked on the iArmor web security application.',
+    points: [
+      'Improved UI responsiveness and performance through code optimization and component refactoring.',
+    ],
+    pending: false,
+  },
+  {
+    period: '2022 – 2026',
+    title: 'B.Tech in Computer Science and Engineering',
+    org: 'Nalanda Institute of Technology',
+    note: 'Completed undergraduate studies in Computer Science and Engineering.',
+    points: ['CGPA: 7.8'],
+    pending: false,
+  },
 ];
 
 export const achievements = [
-  { title: 'Certification or award', text: 'Add a recognition you can verify.', pending: true },
-  { title: 'Hackathon or open source', text: 'Add contributions or events you took part in.', pending: true },
-  { title: 'Shipped milestone', text: 'Add a launch or result you can stand behind.', pending: true },
+  {
+    title: 'Full Stack Development with AI',
+    text: 'PW Skills · March 2026',
+    link: 'https://drive.google.com/file/d/1WMOL1kovAlauCrObS3HLVrRDjIVY6AL7/view?usp=sharing',
+    pending: false,
+  },
+  {
+    title: 'ReactJS for Beginners',
+    text: 'Simplilearn · September 2025',
+    link: 'https://drive.google.com/file/d/1gTiykaVJpJgnUT704R8jV5XPheWEOH2a/view?usp=sharing',
+    pending: false,
+  },
+  {
+    title: 'Full Stack Developer Internship',
+    text: 'Bulwarkers Websecurity Pvt. Ltd. · iArmor',
+    link: 'https://drive.google.com/file/d/1ncPh-8It4XFWNrK3wu8CR5pa1FYuTPEM/view?usp=sharing',
+    pending: false,
+  },
 ];
 
 // 🎨 Look & feel. Light theme only.
