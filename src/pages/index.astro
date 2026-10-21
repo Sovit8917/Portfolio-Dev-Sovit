@@ -13,7 +13,7 @@ import {
 const allTags = [...new Set(projects.flatMap((p) => p.tags))];
 const initial = profile.name.trim()[0].toUpperCase();
 const year = new Date().getFullYear();
-const layers = Array.from({ length: 12 }, (_, i) => i + 1); // extrusion depth
+const layers = Array.from({ length: 12 }, (_, i) => i + 1); // SOVIT extrusion depth
 const nav = [
   sections.about && { href: "#about", label: "About" },
   sections.skills && { href: "#skills", label: "Skills" },
@@ -63,102 +63,57 @@ const nav = [
       <div class="hero-glow" aria-hidden="true"></div>
       <div class="wrap hero-wrap">
         <div class="hero-meta">
-          <p class="role">
-            {profile.role}{
-              profile.location && <small>{profile.location}</small>
-            }
-          </p>
           {
             profile.available && (
               <p class="status">
                 <i />
                 Available for work
+                {profile.location && (
+                  <>
+                    <span class="sep" aria-hidden="true">·</span>
+                    <span>{profile.location}</span>
+                  </>
+                )}
               </p>
             )
           }
         </div>
 
-        <div class="intro">
-          <h1 class="intro-h">
-            Hi, I’m <em>{profile.name}</em>
-            <span>— {profile.role}</span>
-          </h1>
-          <p class="lead">{profile.intro}</p>
-        </div>
-
         <div class="stage3d" id="stage3d">
-          <div class="word-enter">
-            <p class="word3d" aria-hidden="true">
-              <span class="layer front" aria-hidden="true"
-                >{profile.wordmark}</span
-              >
-              {
-                layers.map((i) => (
-                  <span
-                    class="layer back"
-                    aria-hidden="true"
-                    style={`--i:${i}`}
-                  >
-                    {profile.wordmark}
-                  </span>
-                ))
-              }
-            </p>
+          <div class="intro">
+            <div class="intro-enter">
+              <h1 class="intro-h">
+                <span class="ln" style="--n:0">
+                  Hi, I’m <em>{profile.name}</em>
+                </span>
+                <span class="ln role" style="--n:1">{profile.role}</span>
+              </h1>
+            </div>
+            <p class="lead">{profile.intro}</p>
           </div>
 
-          <div class="mock-wrap" aria-hidden="true">
-            <div class="mock-enter">
-              <div class="mock">
-                <div class="mock-glow"></div>
-                <div class="sheet s3"></div>
-                <div class="sheet s2"></div>
-                <div class="mock-body">
-                  <div class="chrome">
-                    <span class="dots"><i></i><i></i><i></i></span>
-                    <span class="addr"
-                      >{profile.firstName.toLowerCase()}.dev</span
+          <div class="word-stage">
+            <div class="word-enter">
+              <p class="word3d" aria-hidden="true">
+                <span class="layer front" aria-hidden="true"
+                  >{profile.wordmark}</span
+                >
+                {
+                  layers.map((i) => (
+                    <span
+                      class="layer back"
+                      aria-hidden="true"
+                      style={`--i:${i}`}
                     >
-                    <span class="gap"></span>
-                  </div>
-                  <div class="page">
-                    <div class="p-nav">
-                      <b>{profile.firstName}</b><i></i><i></i><i></i><em
-                        >Contact</em
-                      >
-                    </div>
-                    <div class="p-hero">
-                      <div>
-                        <h4>Real-world web apps</h4><p>
-                          React, Astro, Node.js, NestJS and databases.
-                        </p>
-                      </div>
-                      <div class="p-orb"></div>
-                    </div>
-                    <div class="p-cards">
-                      {
-                        stats.map((x) => (
-                          <div class="p-card">
-                            <>
-                              <u />
-                              <strong>{x.value}</strong>
-                              <span>{x.label}</span>
-                            </>
-                          </div>
-                        ))
-                      }
-                    </div>
-                  </div>
-                </div>
-                <div class="float">
-                  <b>{profile.firstName[0]}</b><span
-                    >{profile.role}<small>React · Node.js · NestJS</small></span
-                  >
-                </div>
-              </div>
+                      {profile.wordmark}
+                    </span>
+                  ))
+                }
+              </p>
             </div>
           </div>
 
-          <div class="hero-copy">
+          <div class="hero-row">
             <div class="actions">
               {
                 sections.about && (
