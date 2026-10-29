@@ -16,7 +16,7 @@ location: 'Balasore, Odisha',
   available: true, //set true to show an "Available for work" badge
   socials: [
     { label: 'GitHub', href: 'https://github.com/Sovit8917'},
-    { label: 'LinkedIn', href: 'https://linkedin.com/in/yourname' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/sovita-sarbeswar-lenka-71440128a' },
   ],
 };
 
@@ -37,7 +37,7 @@ export const about = [
   },
   {
     title: 'Technical strengths',
-    text: 'React, Next.js, Astro, Node.js, NestJS, PostgreSQL, MongoDB, and Redis.',
+    text: 'React, Next.js, Node.js, NestJS, PostgreSQL, MongoDB.',
   },
   {
     title: 'Career goals',
@@ -105,8 +105,6 @@ export const skills = [
       { name: 'TypeScript', note: 'Type-safe, maintainable applications' },
       { name: 'React', note: 'Reusable components and interactive interfaces' },
       { name: 'Next.js', note: 'Full-stack React applications' },
-      { name: 'Astro', note: 'Fast, content-focused websites' },
-      { name: 'Redux Toolkit', note: 'Predictable application state management' },
     ],
   },
   {
@@ -163,23 +161,13 @@ export const skills = [
 
 export const experience = [
   {
-    period: 'Aug 2026 – Present',
+    period: 'Feb 2026 – Present',
     title: 'Full Stack Developer',
     org: 'Bulwarkers Websecurity Pvt. Ltd.',
     note: 'Developing backend services and REST APIs for web security applications.',
     points: [
       'Building APIs using ElysiaJS, TypeScript, and PostgreSQL.',
       'Working on backend architecture, authentication, and database integration.',
-    ],
-    pending: false,
-  },
-  {
-    period: 'Feb 2026 – Jul 2026',
-    title: 'Full Stack Developer Intern',
-    org: 'Bulwarkers Websecurity Pvt. Ltd.',
-    note: 'Worked on the iArmor web security application.',
-    points: [
-      'Improved UI responsiveness and performance through code optimization and component refactoring.',
     ],
     pending: false,
   },
